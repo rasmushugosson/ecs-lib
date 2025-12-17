@@ -116,7 +116,11 @@ pCollection->Add(entity, component); // Adds the component to the entity
 Pools are never created by the user manually, but are rather an internal piece of collections. Each collection contains one component pool for each component type, and these pools can be accessed through the collection. Here is how to access component pools:
 
 ```c++
-const ae::ComponentPool<ExampleComponent>& pool = pCollection->GetPool<ExampleComponent>();
+// GetPool returns a reference (creates the pool if it doesn't exist)
+ae::ComponentPool<ExampleComponent>& pool = pCollection->GetPool<ExampleComponent>();
+
+// TryGetPool returns a pointer (nullptr if pool doesn't exist)
+const ae::ComponentPool<ExampleComponent>* pool = pCollection->TryGetPool<ExampleComponent>();
 ```
 
 ### Systems
@@ -128,7 +132,10 @@ class ExampleSystem : public ae::ComponentSystem
 {
 public:
     ExampleSystem(std::shared_ptr<ae::ComponentCollection> pCollection)
-        : ae::ComponentSystem("ExampleSystem", pCollection) {}
+        : ae::ComponentSystem("ExampleSystem", pCollection)
+    {
+        Validate(); // Validate all entities in the collection
+    }
 
     bool ValidImpl(ae::Entity entity) const override
     {
@@ -138,9 +145,11 @@ public:
     void RunImpl() override
     {
         const auto& collection = GetCollection();
-        const auto& pool = collection.GetPool<ExampleComponent>();
+        const auto* pool = collection.TryGetPool<ExampleComponent>();
 
-        for (const ExampleComponent& component : pool.GetAll())
+        if (!pool) return; // No components of this type
+
+        for (const ExampleComponent& component : pool->GetAll())
         {
             std::cout << component.a << ", " << component.b << std::endl;
         }
@@ -148,7 +157,7 @@ public:
 };
 
 auto pSystem = std::make_unique<ExampleSystem>(pCollection);
-pSystem->Run(); // Validates and runs the system
+pSystem->Run(); // Validates (if not already) and runs the system
 ```
 
 ### Build Configurations
