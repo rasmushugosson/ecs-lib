@@ -349,14 +349,24 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# Visual Studio
+# Visual studio
 
 *.sln
 *.vcxproj
 *.vcxproj.filters
 
 # Outputs
+
+res/outputs
 *.exe
+
+# Gmake
+/build
+/obj
+/bin
+
+# Clang
+compile_commands.json
 
 # Python
 

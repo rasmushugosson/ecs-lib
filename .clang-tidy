@@ -1,0 +1,29 @@
+Checks: >
+  clang-analyzer-*,
+  bugprone-*,
+  performance-*,
+  modernize-*,
+  readability-*,
+
+  -bugprone-easily-swappable-parameters,
+
+  -modernize-use-trailing-return-type,
+  -modernize-use-auto,
+  -modernize-use-default-member-init,
+  -modernize-use-using,
+  -modernize-pass-by-value,
+
+  -readability-magic-numbers,
+  -readability-implicit-bool-conversion,
+  -readability-identifier-naming,
+  -readability-identifier-length,
+  -readability-uppercase-literal-suffix,
+  -readability-redundant-inline-specifier,
+  -readability-redundant-access-specifiers,
+  -readability-convert-member-functions-to-static,
+  -readability-else-after-return
+
+HeaderFilterRegex: '^(\.\./)?(log-lib|sandbox)/'
+
+WarningsAsErrors: ''        # keep them as warnings in terminal
+FormatStyle: none           # let clang-format handle formatting

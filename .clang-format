@@ -1,0 +1,27 @@
+BasedOnStyle: LLVM
+
+IndentWidth: 4
+UseTab: Never
+ColumnLimit: 120
+
+# Braces on next line
+BreakBeforeBraces: Allman
+
+# Ex: int* a
+PointerAlignment: Right
+
+Cpp11BracedListStyle: false
+
+# Includes: sort + group nicely
+SortIncludes: true
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^"'
+    Priority: 0    # project / local headers
+  - Regex: '^<.*>'
+    Priority: 1    # system / library headers
+
+# No one-line control flow
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty

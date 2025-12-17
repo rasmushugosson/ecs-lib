@@ -1,0 +1,3 @@
+[submodule "dep/log-lib"]
+	path = dep/log-lib
+	url = git@github.com:rasmushugosson/log-lib.git
