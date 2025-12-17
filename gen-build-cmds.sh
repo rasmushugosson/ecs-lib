@@ -15,6 +15,9 @@ premake5 gmake-clang
 echo "==> Entering ${BUILD_DIR}"
 pushd "${BUILD_DIR}" > /dev/null
 
+echo "==> Cleaning previous build"
+make clean config="${MAKE_CONFIG}" 2>/dev/null || true
+
 echo "==> Running bear with make (config=${MAKE_CONFIG})"
 bear -- make config="${MAKE_CONFIG}" -j"$(nproc)"
 

@@ -1,7 +1,5 @@
 #include "Log.h"
 
-#include <print>
-
 // Author: Rasmus Hugosson
 // Date: 2025-12-17
 
@@ -72,11 +70,9 @@ class RenderSystem : public ae::ComponentSystem
             const TransformComponent *transform = collection.Get<TransformComponent>(mesh.entity);
 
             // Display the component data
-            AE_LOG(AE_TRACE, "Entity {}: position=[{}, {}, {}], rotation=[{}, {}, {}], mesh={}",
-                   mesh.entity,
-                   transform->position.x, transform->position.y, transform->position.z,
-                   transform->rotation.x, transform->rotation.y, transform->rotation.z,
-                   mesh.mesh);
+            AE_LOG(AE_TRACE, "Entity {}: position=[{}, {}, {}], rotation=[{}, {}, {}], mesh={}", mesh.entity,
+                   transform->position.x, transform->position.y, transform->position.z, transform->rotation.x,
+                   transform->rotation.y, transform->rotation.z, mesh.mesh);
         }
 
         AE_LOG(AE_INFO, "Render system done");
@@ -96,15 +92,10 @@ void Demo()
     AE_LOG(AE_TRACE, "Created entity with ID {}", entity);
 
     // Create some example components
-    TransformComponent transform{
-        .position = Vec3{ .x = 1.0f, .y = 2.0f, .z = 3.0f },
-        .rotation = Vec3{ .x = 4.0f, .y = 5.0f, .z = 6.0f }
-    };
+    TransformComponent transform{ .position = Vec3{ .x = 1.0f, .y = 2.0f, .z = 3.0f },
+                                  .rotation = Vec3{ .x = 4.0f, .y = 5.0f, .z = 6.0f } };
 
-    MeshComponent mesh{
-        .entity = entity,
-        .mesh = 7
-    };
+    MeshComponent mesh{ .entity = entity, .mesh = 7 };
 
     // Component collections store the components
     auto pCollection = std::make_shared<ae::ComponentCollection>();
