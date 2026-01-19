@@ -1,12 +1,18 @@
 -- Reusable ECS project definition
 -- Can be included by parent projects via: include("path/to/ecs-lib/ecs-project.lua")
--- This will also include the Log project dependency
+-- This will also include the Log project dependency (if not already included)
 
 local ecs_lib_dir = path.getdirectory(_SCRIPT)
 local ecs_lib_src = ecs_lib_dir .. "/ecs-lib"
 local log_lib_dir = ecs_lib_dir .. "/dep/log-lib"
 
-include(log_lib_dir .. "/log-project.lua")
+-- Only include log-lib if not already included by parent project
+if not LOG_LIB_INCLUDED then
+    include(log_lib_dir .. "/log-project.lua")
+end
+
+-- Use exported path from log-lib if available, otherwise use local path
+local log_include_dir = LOG_LIB_INCLUDE_DIR or (log_lib_dir .. "/log-lib/include")
 
 project("ECS")
     kind("StaticLib")
@@ -22,7 +28,7 @@ project("ECS")
     })
 
     includedirs({
-        log_lib_dir .. "/log-lib/include",
+        log_include_dir,
         ecs_lib_src .. "/include",
         ecs_lib_src .. "/src"
     })
